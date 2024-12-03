@@ -61,7 +61,7 @@ const userMessageAuthorization = async (
   chat: Id<"chats">
 ) => {
   const member = await ctx.db
-    .query("chatMembers")
+    .query("chatParticipants")
     .withIndex("by_chat_participant", (q) =>
       q.eq("chat", chat).eq("participant", ctx.user._id)
     )

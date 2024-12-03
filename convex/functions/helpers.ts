@@ -6,7 +6,7 @@ import {
   customCtx,
 } from "convex-helpers/server/customFunctions";
 import { mutation, query } from "../_generated/server";
-import { getCurrentUser } from "./user";
+import { getCurrentUser } from "./users";
 
 export const authenticatedQuery = customQuery(
   query,

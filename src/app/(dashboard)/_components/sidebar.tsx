@@ -20,15 +20,13 @@ import {
 } from "@/components/ui/sidebar";
 import { SignOutButton } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
-import { User2Icon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { api } from "../../../../convex/_generated/api";
-import { NewDM } from "./new-direct-message";
+import { NewChat } from "./new-chat";
 
 export function DashboardSidebar() {
-  const user = useQuery(api.functions.user.get);
-  const directMessages = useQuery(api.functions.dms.list);
+  const user = useQuery(api.functions.users.get);
   const pathname = usePathname();
 
   if (!user) {
@@ -43,39 +41,16 @@ export function DashboardSidebar() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild isActive={pathname === "/"}>
-                  <Link href="/">
-                    <User2Icon />
-                    Friends
-                  </Link>
+                  <Link href="/">Your AMA sessions</Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
           <SidebarGroup>
-            <SidebarGroupLabel>Direct Messages</SidebarGroupLabel>
-            <NewDM />
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {directMessages?.map((dm) => (
-                  <SidebarMenuItem key={dm._id}>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={pathname === `/dms/${dm._id}`}
-                    >
-                      <Link href={`/dms/${dm._id}`}>
-                        <Avatar className="size-6">
-                          <AvatarImage src={dm.user.image} />
-                          <AvatarFallback>{dm.user.username[0]}</AvatarFallback>
-                        </Avatar>
-                        <p className="font-medium">{dm.user.username}</p>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
+            <SidebarGroupLabel>New session</SidebarGroupLabel>
+            <NewChat />
+            <SidebarGroupContent></SidebarGroupContent>
           </SidebarGroup>
-          {/* TODO: Add direct messages */}
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
@@ -86,11 +61,7 @@ export function DashboardSidebar() {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <SidebarMenuButton className="flex items-center">
-                      <Avatar className="size-6">
-                        <AvatarImage src={user.image} />
-                        <AvatarFallback>{user.username[0]}</AvatarFallback>
-                      </Avatar>
-                      <p className="font-medium">{user.username}</p>
+                      <p className="font-medium">{user.email}</p>
                     </SidebarMenuButton>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>

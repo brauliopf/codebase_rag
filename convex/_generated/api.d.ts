@@ -14,12 +14,11 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as functions_chats from "../functions/chats.js";
-import type * as functions_dms from "../functions/dms.js";
-import type * as functions_friends from "../functions/friends.js";
 import type * as functions_helpers from "../functions/helpers.js";
-import type * as functions_message from "../functions/message.js";
-import type * as functions_storage from "../functions/storage.js";
-import type * as functions_user from "../functions/user.js";
+import type * as functions_msgs from "../functions/msgs.js";
+import type * as functions_repos from "../functions/repos.js";
+import type * as functions_users from "../functions/users.js";
+import type * as github from "../github.js";
 import type * as http from "../http.js";
 
 /**
@@ -32,12 +31,11 @@ import type * as http from "../http.js";
  */
 declare const fullApi: ApiFromModules<{
   "functions/chats": typeof functions_chats;
-  "functions/dms": typeof functions_dms;
-  "functions/friends": typeof functions_friends;
   "functions/helpers": typeof functions_helpers;
-  "functions/message": typeof functions_message;
-  "functions/storage": typeof functions_storage;
-  "functions/user": typeof functions_user;
+  "functions/msgs": typeof functions_msgs;
+  "functions/repos": typeof functions_repos;
+  "functions/users": typeof functions_users;
+  github: typeof github;
   http: typeof http;
 }>;
 export declare const api: FilterApi<

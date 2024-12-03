@@ -16,7 +16,7 @@ export const get = query({
 // but can call from other function inside the API
 export const upsert = internalMutation({
   args: {
-    username: v.string(),
+    email: v.string(),
     image: v.string(),
     clerkId: v.string(),
   },
@@ -28,12 +28,12 @@ export const upsert = internalMutation({
 
     if (user) {
       await ctx.db.patch(user._id, {
-        username: args.username,
+        email: args.email,
         image: args.image,
       });
     } else {
       await ctx.db.insert("users", {
-        username: args.username,
+        email: args.email,
         image: args.image,
         clerkId: args.clerkId,
       });

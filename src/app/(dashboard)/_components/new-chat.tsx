@@ -14,25 +14,26 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SidebarGroupAction } from "@/components/ui/sidebar";
 import { api } from "@/convex/_generated/api";
-import { useMutation } from "convex/react";
+import { useAction, useMutation } from "convex/react";
 import { PlusIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export const NewDM = () => {
+export const NewChat = () => {
   const [open, setOpen] = useState(false);
-  const createDirectMessage = useMutation(api.functions.dms.create);
+  const embedRepo = useAction(api.functions.chats.embedRepo);
+  const createChat = useMutation(api.functions.chats.create);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const id = await createDirectMessage({
-        username: e.currentTarget.username.value,
+      const id = await embedRepo({
+        url: e.currentTarget.url.value,
       });
-      setOpen(false);
-      router.push(`/dms/${id}`);
+      // setOpen(false);
+      // router.push(`/chats/${id}`);
     } catch (error) {
       if (error instanceof Error && error.message.includes("not found")) {
         toast.error("User not found. Please check the username.");
@@ -49,23 +50,23 @@ export const NewDM = () => {
       <DialogTrigger asChild>
         <SidebarGroupAction>
           <PlusIcon />
-          <span className="sr-only">New Direct Message</span>
+          <span className="sr-only">New Session</span>
         </SidebarGroupAction>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-center">New Direct Message</DialogTitle>
+          <DialogTitle className="text-center">New Session</DialogTitle>
           <DialogDescription className="text-center">
-            Enter a username to start a direct message.
+            Enter a repo URL to start a session.
           </DialogDescription>
         </DialogHeader>
         <form className="contents" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-1">
-            <Label htmlFor="username">Username</Label>
-            <Input id="username" type="text" />
+            <Label htmlFor="username">Repo URL</Label>
+            <Input id="url" type="text" />
           </div>
           <DialogFooter>
-            <Button className="w-full">Send DM</Button>
+            <Button className="w-full">Start chatting</Button>
           </DialogFooter>
         </form>
       </DialogContent>

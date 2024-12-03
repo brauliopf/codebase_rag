@@ -4,8 +4,8 @@ import { ConvexClientProvider } from "./convex-client-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Chatstarter",
-  description: "Discord clone built with Convex and Next.js --by @brauliopf",
+  title: "Codebase RAG",
+  description: "Chat with your GitHub repo --by @brauliopf",
 };
 
 export default function RootLayout({
